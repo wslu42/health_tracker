@@ -1,13 +1,13 @@
 let chartInstance = null;
 
 const mealLabels = {
-  before_meal: "Before meal",
-  after_meal: "After meal",
-  unknown: "Unknown"
+  before_meal: "飯前",
+  after_meal: "飯後",
+  unknown: "不確定"
 };
 
 export function formatTimestamp(timestamp) {
-  return new Intl.DateTimeFormat(undefined, {
+  return new Intl.DateTimeFormat("zh-TW", {
     dateStyle: "medium",
     timeStyle: "short"
   }).format(new Date(timestamp));
@@ -17,7 +17,7 @@ export function renderLatestRecord(container, record) {
   if (!record) {
     container.innerHTML = `
       <div class="latest-preview-empty">
-        No records yet. Add the first reading to start tracking.
+        目前還沒有紀錄，新增第一筆量測資料後即可開始追蹤。
       </div>
     `;
     return;
@@ -31,29 +31,29 @@ export function renderLatestRecord(container, record) {
       </div>
       <div class="reading-row">
         <div class="reading-pill">
-          <span>Systolic</span>
+          <span>收縮壓</span>
           <strong>${record.systolic}</strong>
         </div>
         <div class="reading-pill">
-          <span>Diastolic</span>
+          <span>舒張壓</span>
           <strong>${record.diastolic}</strong>
         </div>
         <div class="reading-pill">
-          <span>Pulse</span>
+          <span>脈搏</span>
           <strong>${record.pulse}</strong>
         </div>
       </div>
       <div class="detail-grid">
         <div class="detail-item">
-          <span>Medication Taken</span>
-          <strong>${record.medicationTaken ? "Yes" : "No"}</strong>
+          <span>是否服藥</span>
+          <strong>${record.medicationTaken ? "是" : "否"}</strong>
         </div>
         <div class="detail-item">
-          <span>Medication Dose / Note</span>
+          <span>藥量 / 用藥備註</span>
           <strong>${escapeHtml(record.medicationDose || "—")}</strong>
         </div>
         <div class="detail-item">
-          <span>Additional Note</span>
+          <span>其他備註</span>
           <strong>${escapeHtml(record.note || "—")}</strong>
         </div>
       </div>
@@ -66,7 +66,7 @@ export function renderRecordsTable(container, records) {
     container.innerHTML = `
       <tr>
         <td colspan="7">
-          <div class="table-empty">No saved records yet.</div>
+          <div class="table-empty">目前尚未儲存任何紀錄。</div>
         </td>
       </tr>
     `;
@@ -81,9 +81,9 @@ export function renderRecordsTable(container, records) {
           <td>${record.systolic}/${record.diastolic}</td>
           <td>${record.pulse}</td>
           <td>${mealLabels[record.mealStatus]}</td>
-          <td>${record.medicationTaken ? "Yes" : "No"}${record.medicationDose ? `<br>${escapeHtml(record.medicationDose)}` : ""}</td>
+          <td>${record.medicationTaken ? "是" : "否"}${record.medicationDose ? `<br>${escapeHtml(record.medicationDose)}` : ""}</td>
           <td>${escapeHtml(record.note || "—")}</td>
-          <td><button type="button" class="delete-button" data-record-id="${record.id}">Delete</button></td>
+          <td><button type="button" class="delete-button" data-record-id="${record.id}">刪除</button></td>
         </tr>
       `
     )
@@ -101,10 +101,10 @@ export function renderChart(canvas, records) {
     chartInstance = new Chart(context, {
       type: "line",
       data: {
-        labels: ["No records"],
+        labels: ["尚無資料"],
         datasets: []
       },
-      options: baseChartOptions("Add records to see chart trends.")
+      options: baseChartOptions()
     });
     return;
   }
@@ -115,7 +115,7 @@ export function renderChart(canvas, records) {
       labels: records.map((record) => formatTimestamp(record.timestamp)),
       datasets: [
         {
-          label: "Systolic",
+          label: "收縮壓",
           data: records.map((record) => record.systolic),
           borderColor: "#2f6f91",
           backgroundColor: "rgba(47, 111, 145, 0.15)",
@@ -123,7 +123,7 @@ export function renderChart(canvas, records) {
           fill: false
         },
         {
-          label: "Diastolic",
+          label: "舒張壓",
           data: records.map((record) => record.diastolic),
           borderColor: "#5ca08e",
           backgroundColor: "rgba(92, 160, 142, 0.15)",
@@ -131,7 +131,7 @@ export function renderChart(canvas, records) {
           fill: false
         },
         {
-          label: "Pulse",
+          label: "脈搏",
           data: records.map((record) => record.pulse),
           borderColor: "#b87545",
           backgroundColor: "rgba(184, 117, 69, 0.15)",
@@ -189,7 +189,7 @@ export function renderWarning(element, message) {
   element.classList.remove("hidden");
 }
 
-function baseChartOptions(emptyText) {
+function baseChartOptions() {
   return {
     maintainAspectRatio: false,
     responsive: true,

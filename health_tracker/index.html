@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Daily Blood Pressure Tracker</title>
+  <title>每日血壓追蹤</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="app-shell">
     <header class="hero">
-      <p class="eyebrow">Personal Health Log</p>
-      <h1>Daily Blood Pressure Tracker</h1>
-      <p class="disclaimer">This tool is for personal tracking only and does not replace medical advice.</p>
+      <p class="eyebrow">個人健康紀錄</p>
+      <h1>每日血壓追蹤</h1>
+      <p class="disclaimer">本工具僅供個人追蹤使用，不能取代專業醫療建議。</p>
     </header>
 
     <main class="layout">
       <section class="card input-card" aria-labelledby="entry-title">
         <div class="card-header">
-          <h2 id="entry-title">Add Record</h2>
-          <p>Enter the reading and the app will save the current local time automatically.</p>
+          <h2 id="entry-title">新增紀錄</h2>
+          <p>輸入量測資料後，系統會自動以目前裝置的本地時間儲存。</p>
         </div>
 
         <form id="record-form" class="record-form" novalidate>
@@ -26,59 +26,59 @@
 
           <div class="field-grid">
             <label class="field">
-              <span>Systolic</span>
+              <span>收縮壓</span>
               <input id="systolic" name="systolic" type="number" inputmode="numeric" min="60" max="250" required>
             </label>
 
             <label class="field">
-              <span>Diastolic</span>
+              <span>舒張壓</span>
               <input id="diastolic" name="diastolic" type="number" inputmode="numeric" min="30" max="150" required>
             </label>
 
             <label class="field">
-              <span>Pulse</span>
+              <span>脈搏</span>
               <input id="pulse" name="pulse" type="number" inputmode="numeric" min="30" max="220" required>
             </label>
 
             <label class="field">
-              <span>Meal Status</span>
+              <span>用餐狀態</span>
               <select id="meal-status" name="mealStatus">
-                <option value="before_meal">Before meal</option>
-                <option value="after_meal">After meal</option>
-                <option value="unknown" selected>Unknown</option>
+                <option value="before_meal">飯前</option>
+                <option value="after_meal">飯後</option>
+                <option value="unknown" selected>不確定</option>
               </select>
             </label>
 
             <label class="field">
-              <span>Medication Taken</span>
+              <span>是否服藥</span>
               <select id="medication-taken" name="medicationTaken">
-                <option value="true">Yes</option>
-                <option value="false" selected>No</option>
+                <option value="true">是</option>
+                <option value="false" selected>否</option>
               </select>
             </label>
 
             <label class="field field-wide">
-              <span>Medication Dose or Note</span>
-              <input id="medication-dose" name="medicationDose" type="text" maxlength="120" placeholder="Example: 5 mg after breakfast">
+              <span>藥量或用藥備註</span>
+              <input id="medication-dose" name="medicationDose" type="text" maxlength="120" placeholder="例如：早餐後 5 mg">
             </label>
 
             <label class="field field-wide">
-              <span>Optional Note</span>
-              <textarea id="note" name="note" rows="3" maxlength="240" placeholder="Anything worth remembering about this reading"></textarea>
+              <span>備註</span>
+              <textarea id="note" name="note" rows="3" maxlength="240" placeholder="可記錄這次量測需要特別注意的事情"></textarea>
             </label>
           </div>
 
           <div class="button-row">
-            <button type="submit" class="primary-button">Save Record</button>
-            <button type="reset" class="secondary-button">Clear Form</button>
+            <button type="submit" class="primary-button">儲存紀錄</button>
+            <button type="reset" class="secondary-button">清除表單</button>
           </div>
         </form>
       </section>
 
       <section class="card latest-card" aria-labelledby="latest-title">
         <div class="card-header">
-          <h2 id="latest-title">Latest Record</h2>
-          <p>Most recent saved reading.</p>
+          <h2 id="latest-title">最新紀錄</h2>
+          <p>最近一次儲存的量測資料。</p>
         </div>
         <div id="latest-record"></div>
       </section>
@@ -86,13 +86,13 @@
       <section class="card records-card" aria-labelledby="records-title">
         <div class="card-header card-header-split">
           <div>
-            <h2 id="records-title">Recent Records</h2>
-            <p>Stored locally in this browser.</p>
+            <h2 id="records-title">近期紀錄</h2>
+            <p>資料會儲存在目前使用的瀏覽器中。</p>
           </div>
           <div class="button-group export-group">
-            <button id="export-json" type="button" class="secondary-button">Export JSON</button>
-            <button id="export-csv" type="button" class="secondary-button">Export CSV</button>
-            <label class="secondary-button import-button" for="import-json">Import JSON</label>
+            <button id="export-json" type="button" class="secondary-button">匯出 JSON</button>
+            <button id="export-csv" type="button" class="secondary-button">匯出 CSV</button>
+            <label class="secondary-button import-button" for="import-json">匯入 JSON</label>
             <input id="import-json" type="file" accept="application/json">
           </div>
         </div>
@@ -101,12 +101,12 @@
           <table class="records-table">
             <thead>
               <tr>
-                <th>Time</th>
-                <th>BP</th>
-                <th>Pulse</th>
-                <th>Meal</th>
-                <th>Medication</th>
-                <th>Notes</th>
+                <th>時間</th>
+                <th>血壓</th>
+                <th>脈搏</th>
+                <th>用餐</th>
+                <th>用藥</th>
+                <th>備註</th>
                 <th></th>
               </tr>
             </thead>
@@ -118,20 +118,20 @@
       <section class="card chart-card" aria-labelledby="chart-title">
         <div class="card-header card-header-split">
           <div>
-            <h2 id="chart-title">Trend Chart</h2>
-            <p>Review blood pressure and pulse over time.</p>
+            <h2 id="chart-title">趨勢圖表</h2>
+            <p>查看血壓與脈搏隨時間變化的情況。</p>
           </div>
           <label class="chart-filter">
-            <span>Show</span>
+            <span>顯示範圍</span>
             <select id="chart-range">
-              <option value="7">Last 7 days</option>
-              <option value="30">Last 30 days</option>
-              <option value="all">All records</option>
+              <option value="7">近 7 天</option>
+              <option value="30">近 30 天</option>
+              <option value="all">全部紀錄</option>
             </select>
           </label>
         </div>
         <div class="chart-wrap">
-          <canvas id="records-chart" aria-label="Blood pressure and pulse chart"></canvas>
+          <canvas id="records-chart" aria-label="血壓與脈搏趨勢圖"></canvas>
         </div>
       </section>
     </main>

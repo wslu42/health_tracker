@@ -73,11 +73,11 @@ export function bindControls(elements) {
   });
 
   elements.exportJsonButton.addEventListener("click", () => {
-    downloadFile("blood-pressure-records.json", exportRecordsAsJSON(), "application/json");
+    downloadFile("health-tracker-records.json", exportRecordsAsJSON(), "application/json");
   });
 
   elements.exportCsvButton.addEventListener("click", () => {
-    downloadFile("blood-pressure-records.csv", exportRecordsAsCSV(), "text/csv;charset=utf-8");
+    downloadFile("health-tracker-records.csv", exportRecordsAsCSV(), "text/csv;charset=utf-8");
   });
 
   elements.importJsonInput.addEventListener("change", async (event) => {
@@ -95,7 +95,7 @@ export function bindControls(elements) {
     } catch (error) {
       renderWarning(
         elements.formWarning,
-        error instanceof Error ? error.message : "Import failed. Please use a valid JSON export."
+        error instanceof Error ? error.message : "匯入失敗，請確認所選檔案是正確的 JSON 匯出檔。"
       );
     } finally {
       elements.importJsonInput.value = "";

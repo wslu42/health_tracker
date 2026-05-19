@@ -111,13 +111,13 @@ export function importRecordsFromJSON(jsonText) {
   const parsed = JSON.parse(jsonText);
 
   if (!Array.isArray(parsed)) {
-    throw new Error("Imported JSON must be an array of records.");
+    throw new Error("匯入的 JSON 內容必須是紀錄陣列。");
   }
 
   const normalized = parsed.filter(validateRecordShape).map(normalizeRecord);
 
   if (!normalized.length && parsed.length > 0) {
-    throw new Error("No valid records were found in the imported JSON.");
+    throw new Error("匯入的 JSON 中沒有可用的有效紀錄。");
   }
 
   saveRecords(normalized);
@@ -175,9 +175,9 @@ export function filterRecordsByDays(range) {
 export function validateMeasurementValues({ systolic, diastolic, pulse }) {
   const issues = [];
 
-  checkRange("Systolic", Number(systolic), ranges.systolic, issues);
-  checkRange("Diastolic", Number(diastolic), ranges.diastolic, issues);
-  checkRange("Pulse", Number(pulse), ranges.pulse, issues);
+  checkRange("收縮壓", Number(systolic), ranges.systolic, issues);
+  checkRange("舒張壓", Number(diastolic), ranges.diastolic, issues);
+  checkRange("脈搏", Number(pulse), ranges.pulse, issues);
 
   return {
     valid: issues.length === 0,
@@ -187,12 +187,12 @@ export function validateMeasurementValues({ systolic, diastolic, pulse }) {
 
 function checkRange(label, value, range, issues) {
   if (!Number.isFinite(value)) {
-    issues.push(`${label} must be a number.`);
+    issues.push(`${label}必須是數字。`);
     return;
   }
 
   if (value < range.min || value > range.max) {
-    issues.push(`${label} must be between ${range.min} and ${range.max}.`);
+    issues.push(`${label}必須介於 ${range.min} 到 ${range.max} 之間。`);
   }
 }
 

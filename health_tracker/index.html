@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Blood Pressure Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="hero">
+      <p class="eyebrow">Personal Health Log</p>
+      <h1>Daily Blood Pressure Tracker</h1>
+      <p class="disclaimer">This tool is for personal tracking only and does not replace medical advice.</p>
+    </header>
+
+    <main class="layout">
+      <section class="card input-card" aria-labelledby="entry-title">
+        <div class="card-header">
+          <h2 id="entry-title">Add Record</h2>
+          <p>Enter the reading and the app will save the current local time automatically.</p>
+        </div>
+
+        <form id="record-form" class="record-form" novalidate>
+          <div id="form-warning" class="warning hidden" role="alert" aria-live="polite"></div>
+
+          <div class="field-grid">
+            <label class="field">
+              <span>Systolic</span>
+              <input id="systolic" name="systolic" type="number" inputmode="numeric" min="60" max="250" required>
+            </label>
+
+            <label class="field">
+              <span>Diastolic</span>
+              <input id="diastolic" name="diastolic" type="number" inputmode="numeric" min="30" max="150" required>
+            </label>
+
+            <label class="field">
+              <span>Pulse</span>
+              <input id="pulse" name="pulse" type="number" inputmode="numeric" min="30" max="220" required>
+            </label>
+
+            <label class="field">
+              <span>Meal Status</span>
+              <select id="meal-status" name="mealStatus">
+                <option value="before_meal">Before meal</option>
+                <option value="after_meal">After meal</option>
+                <option value="unknown" selected>Unknown</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Medication Taken</span>
+              <select id="medication-taken" name="medicationTaken">
+                <option value="true">Yes</option>
+                <option value="false" selected>No</option>
+              </select>
+            </label>
+
+            <label class="field field-wide">
+              <span>Medication Dose or Note</span>
+              <input id="medication-dose" name="medicationDose" type="text" maxlength="120" placeholder="Example: 5 mg after breakfast">
+            </label>
+
+            <label class="field field-wide">
+              <span>Optional Note</span>
+              <textarea id="note" name="note" rows="3" maxlength="240" placeholder="Anything worth remembering about this reading"></textarea>
+            </label>
+          </div>
+
+          <div class="button-row">
+            <button type="submit" class="primary-button">Save Record</button>
+            <button type="reset" class="secondary-button">Clear Form</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card latest-card" aria-labelledby="latest-title">
+        <div class="card-header">
+          <h2 id="latest-title">Latest Record</h2>
+          <p>Most recent saved reading.</p>
+        </div>
+        <div id="latest-record"></div>
+      </section>
+
+      <section class="card records-card" aria-labelledby="records-title">
+        <div class="card-header card-header-split">
+          <div>
+            <h2 id="records-title">Recent Records</h2>
+            <p>Stored locally in this browser.</p>
+          </div>
+          <div class="button-group export-group">
+            <button id="export-json" type="button" class="secondary-button">Export JSON</button>
+            <button id="export-csv" type="button" class="secondary-button">Export CSV</button>
+            <label class="secondary-button import-button" for="import-json">Import JSON</label>
+            <input id="import-json" type="file" accept="application/json">
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="records-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>BP</th>
+                <th>Pulse</th>
+                <th>Meal</th>
+                <th>Medication</th>
+                <th>Notes</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="records-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card chart-card" aria-labelledby="chart-title">
+        <div class="card-header card-header-split">
+          <div>
+            <h2 id="chart-title">Trend Chart</h2>
+            <p>Review blood pressure and pulse over time.</p>
+          </div>
+          <label class="chart-filter">
+            <span>Show</span>
+            <select id="chart-range">
+              <option value="7">Last 7 days</option>
+              <option value="30">Last 30 days</option>
+              <option value="all">All records</option>
+            </select>
+          </label>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="records-chart" aria-label="Blood pressure and pulse chart"></canvas>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="module" src="main.js"></script>
+</body>
+</html>

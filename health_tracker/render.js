@@ -101,20 +101,20 @@ export function renderRecordsTable(container, records) {
     .map(
       (record) => `
         <tr>
-          <td>${formatTimestamp(record.timestamp)}</td>
-          <td>${record.systolic}/${record.diastolic}</td>
-          <td>${record.pulse}</td>
-          <td>
+          <td data-label="時間">${formatTimestamp(record.timestamp)}</td>
+          <td data-label="血壓">${record.systolic}/${record.diastolic}</td>
+          <td data-label="脈搏">${record.pulse}</td>
+          <td data-label="狀態">
             ${mealLabels[record.mealStatus]}<br>
             ${measurementContextLabels[record.measurementContext]}<br>
             體力：${energyLabels[record.energyChange]}
           </td>
-          <td>${formatSymptoms(record)}</td>
-          <td>
+          <td data-label="症狀">${formatSymptoms(record)}</td>
+          <td data-label="用藥 / 備註">
             服藥：${record.medicationTaken ? "是" : "否"}${record.medicationDose ? `<br>${escapeHtml(record.medicationDose)}` : ""}
             <br>備註：${escapeHtml(record.note || "—")}
           </td>
-          <td><button type="button" class="delete-button" data-record-id="${record.id}">刪除</button></td>
+          <td data-label="操作"><button type="button" class="delete-button" data-record-id="${record.id}">刪除</button></td>
         </tr>
       `
     )

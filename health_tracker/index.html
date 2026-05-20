@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
@@ -62,6 +62,44 @@
               <input id="medication-dose" name="medicationDose" type="text" maxlength="120" placeholder="例如：早餐後 5 mg">
             </label>
 
+            <fieldset class="field field-wide checklist-group">
+              <legend>症狀勾選</legend>
+              <label class="check-item">
+                <input id="symptom-dizzy" name="hadDizziness" type="checkbox">
+                <span>今天是否有頭暈</span>
+              </label>
+              <label class="check-item">
+                <input id="symptom-breathless" name="hadBreathlessness" type="checkbox">
+                <span>是否會喘</span>
+              </label>
+              <label class="check-item">
+                <input id="symptom-chest-tightness" name="hadChestTightness" type="checkbox">
+                <span>是否胸悶</span>
+              </label>
+              <label class="check-item">
+                <input id="vision-change" name="hadVisionChange" type="checkbox">
+                <span>是否有視力變化</span>
+              </label>
+            </fieldset>
+
+            <label class="field">
+              <span>體力變化</span>
+              <select id="energy-change" name="energyChange">
+                <option value="unchanged" selected>差不多</option>
+                <option value="better">變好</option>
+                <option value="worse">變差</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>量測狀態</span>
+              <select id="measurement-context" name="measurementContext">
+                <option value="resting" selected>休息後量</option>
+                <option value="post_exercise">運動後量</option>
+                <option value="unknown">不確定</option>
+              </select>
+            </label>
+
             <label class="field field-wide">
               <span>備註</span>
               <textarea id="note" name="note" rows="3" maxlength="240" placeholder="可記錄這次量測需要特別注意的事情"></textarea>
@@ -104,9 +142,9 @@
                 <th>時間</th>
                 <th>血壓</th>
                 <th>脈搏</th>
-                <th>用餐</th>
-                <th>用藥</th>
-                <th>備註</th>
+                <th>狀態</th>
+                <th>症狀</th>
+                <th>用藥 / 備註</th>
                 <th></th>
               </tr>
             </thead>

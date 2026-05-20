@@ -1,4 +1,4 @@
-import {
+﻿import {
   addRecord,
   deleteRecord,
   exportRecordsAsCSV,
@@ -35,6 +35,12 @@ export function bindControls(elements) {
       mealStatus: String(formData.get("mealStatus")),
       medicationTaken: formData.get("medicationTaken") === "true",
       medicationDose: String(formData.get("medicationDose") || "").trim(),
+      hadDizziness: formData.get("hadDizziness") === "on",
+      hadBreathlessness: formData.get("hadBreathlessness") === "on",
+      hadChestTightness: formData.get("hadChestTightness") === "on",
+      hadVisionChange: formData.get("hadVisionChange") === "on",
+      energyChange: String(formData.get("energyChange") || "unchanged"),
+      measurementContext: String(formData.get("measurementContext") || "unknown"),
       note: String(formData.get("note") || "").trim()
     };
 
@@ -48,16 +54,14 @@ export function bindControls(elements) {
     renderWarning(elements.formWarning, "");
     addRecord(recordInput);
     elements.form.reset();
-    elements.mealStatus.value = "unknown";
-    elements.medicationTaken.value = "false";
+    resetDefaults(elements);
     refreshUi();
   });
 
   elements.form.addEventListener("reset", () => {
     window.setTimeout(() => {
       renderWarning(elements.formWarning, "");
-      elements.mealStatus.value = "unknown";
-      elements.medicationTaken.value = "false";
+      resetDefaults(elements);
     }, 0);
   });
 
@@ -107,6 +111,13 @@ export function bindControls(elements) {
   });
 
   refreshUi();
+}
+
+function resetDefaults(elements) {
+  elements.mealStatus.value = "unknown";
+  elements.medicationTaken.value = "false";
+  elements.energyChange.value = "unchanged";
+  elements.measurementContext.value = "resting";
 }
 
 function downloadFile(filename, content, mimeType) {

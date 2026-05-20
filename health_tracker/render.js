@@ -1,8 +1,20 @@
-let chartInstance = null;
+﻿let chartInstance = null;
 
 const mealLabels = {
   before_meal: "飯前",
   after_meal: "飯後",
+  unknown: "不確定"
+};
+
+const energyLabels = {
+  better: "變好",
+  worse: "變差",
+  unchanged: "差不多"
+};
+
+const measurementContextLabels = {
+  resting: "休息後量",
+  post_exercise: "運動後量",
   unknown: "不確定"
 };
 
@@ -53,6 +65,18 @@ export function renderLatestRecord(container, record) {
           <strong>${escapeHtml(record.medicationDose || "—")}</strong>
         </div>
         <div class="detail-item">
+          <span>量測狀態</span>
+          <strong>${measurementContextLabels[record.measurementContext]}</strong>
+        </div>
+        <div class="detail-item">
+          <span>體力變化</span>
+          <strong>${energyLabels[record.energyChange]}</strong>
+        </div>
+        <div class="detail-item detail-item-wide">
+          <span>症狀</span>
+          <strong>${formatSymptoms(record)}</strong>
+        </div>
+        <div class="detail-item detail-item-wide">
           <span>其他備註</span>
           <strong>${escapeHtml(record.note || "—")}</strong>
         </div>
@@ -80,9 +104,16 @@ export function renderRecordsTable(container, records) {
           <td>${formatTimestamp(record.timestamp)}</td>
           <td>${record.systolic}/${record.diastolic}</td>
           <td>${record.pulse}</td>
-          <td>${mealLabels[record.mealStatus]}</td>
-          <td>${record.medicationTaken ? "是" : "否"}${record.medicationDose ? `<br>${escapeHtml(record.medicationDose)}` : ""}</td>
-          <td>${escapeHtml(record.note || "—")}</td>
+          <td>
+            ${mealLabels[record.mealStatus]}<br>
+            ${measurementContextLabels[record.measurementContext]}<br>
+            體力：${energyLabels[record.energyChange]}
+          </td>
+          <td>${formatSymptoms(record)}</td>
+          <td>
+            服藥：${record.medicationTaken ? "是" : "否"}${record.medicationDose ? `<br>${escapeHtml(record.medicationDose)}` : ""}
+            <br>備註：${escapeHtml(record.note || "—")}
+          </td>
           <td><button type="button" class="delete-button" data-record-id="${record.id}">刪除</button></td>
         </tr>
       `
@@ -189,6 +220,28 @@ export function renderWarning(element, message) {
   element.classList.remove("hidden");
 }
 
+function formatSymptoms(record) {
+  const symptoms = [];
+
+  if (record.hadDizziness) {
+    symptoms.push("頭暈");
+  }
+
+  if (record.hadBreathlessness) {
+    symptoms.push("會喘");
+  }
+
+  if (record.hadChestTightness) {
+    symptoms.push("胸悶");
+  }
+
+  if (record.hadVisionChange) {
+    symptoms.push("視力變化");
+  }
+
+  return symptoms.length ? symptoms.join("、") : "無";
+}
+
 function baseChartOptions() {
   return {
     maintainAspectRatio: false,
@@ -217,6 +270,6 @@ function escapeHtml(value) {
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
-    .replaceAll("\"", "&quot;")
+    .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
 }

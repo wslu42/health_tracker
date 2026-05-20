@@ -1,4 +1,4 @@
-:root {
+﻿:root {
   --bg: #eef4f7;
   --panel: #ffffff;
   --panel-strong: #f8fbfd;
@@ -12,7 +12,7 @@
   --danger-text: #8a4d0f;
   --shadow: 0 14px 32px rgba(35, 64, 82, 0.08);
   --radius: 20px;
-  --font-stack: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-stack: "Segoe UI", "Microsoft JhengHei", "PingFang TC", sans-serif;
 }
 
 * {
@@ -33,6 +33,13 @@ input,
 select,
 textarea {
   font: inherit;
+}
+
+fieldset,
+legend {
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 
 .app-shell {
@@ -118,7 +125,8 @@ textarea {
   gap: 8px;
 }
 
-.field span {
+.field span,
+.checklist-group legend {
   font-weight: 600;
 }
 
@@ -147,6 +155,33 @@ button:focus {
 
 textarea {
   resize: vertical;
+}
+
+.checklist-group {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--panel-strong);
+}
+
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+}
+
+.check-item input {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  flex: 0 0 auto;
+}
+
+.check-item span {
+  font-weight: 500;
 }
 
 .button-row,
@@ -277,6 +312,10 @@ textarea {
   margin-bottom: 6px;
 }
 
+.detail-item-wide {
+  grid-column: 1 / -1;
+}
+
 .table-wrap {
   overflow-x: auto;
 }
@@ -284,7 +323,7 @@ textarea {
 .records-table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 760px;
+  min-width: 900px;
 }
 
 .records-table th,

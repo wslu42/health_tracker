@@ -1,10 +1,14 @@
-const STORAGE_KEY = "bp-tracker-records";
+﻿const STORAGE_KEY = "bp-tracker-records";
 
 const ranges = {
   systolic: { min: 60, max: 250 },
   diastolic: { min: 30, max: 150 },
   pulse: { min: 30, max: 220 }
 };
+
+const mealStatusValues = ["before_meal", "after_meal", "unknown"];
+const energyChangeValues = ["better", "worse", "unchanged"];
+const measurementContextValues = ["resting", "post_exercise", "unknown"];
 
 const appState = {
   records: []
@@ -19,12 +23,18 @@ function normalizeRecord(record) {
     systolic: Number(record.systolic),
     diastolic: Number(record.diastolic),
     pulse: Number(record.pulse),
-    mealStatus: ["before_meal", "after_meal", "unknown"].includes(record.mealStatus)
-      ? record.mealStatus
-      : "unknown",
+    mealStatus: mealStatusValues.includes(record.mealStatus) ? record.mealStatus : "unknown",
     medicationTaken: toBoolean(record.medicationTaken),
     medicationDose: typeof record.medicationDose === "string" ? record.medicationDose : "",
-    note: typeof record.note === "string" ? record.note : ""
+    note: typeof record.note === "string" ? record.note : "",
+    hadDizziness: toBoolean(record.hadDizziness),
+    hadBreathlessness: toBoolean(record.hadBreathlessness),
+    hadChestTightness: toBoolean(record.hadChestTightness),
+    hadVisionChange: toBoolean(record.hadVisionChange),
+    energyChange: energyChangeValues.includes(record.energyChange) ? record.energyChange : "unchanged",
+    measurementContext: measurementContextValues.includes(record.measurementContext)
+      ? record.measurementContext
+      : "unknown"
   };
 }
 
@@ -40,10 +50,6 @@ function validateRecordShape(record) {
     Number.isFinite(Number(record.diastolic)) &&
     Number.isFinite(Number(record.pulse))
   );
-}
-
-export function getRanges() {
-  return ranges;
 }
 
 export function getRecords() {
@@ -134,6 +140,12 @@ export function exportRecordsAsCSV() {
     "mealStatus",
     "medicationTaken",
     "medicationDose",
+    "hadDizziness",
+    "hadBreathlessness",
+    "hadChestTightness",
+    "hadVisionChange",
+    "energyChange",
+    "measurementContext",
     "note"
   ];
 
@@ -146,6 +158,12 @@ export function exportRecordsAsCSV() {
     record.mealStatus,
     record.medicationTaken,
     record.medicationDose,
+    record.hadDizziness,
+    record.hadBreathlessness,
+    record.hadChestTightness,
+    record.hadVisionChange,
+    record.energyChange,
+    record.measurementContext,
     record.note
   ]);
 
@@ -218,5 +236,5 @@ function sortByOldest(a, b) {
 
 function escapeCsvCell(value) {
   const text = String(value ?? "");
-  return `"${text.replaceAll("\"", "\"\"")}"`;
+  return `"${text.replaceAll('"', '""')}"`;
 }

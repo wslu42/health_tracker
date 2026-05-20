@@ -1,4 +1,4 @@
-import { bindControls } from "./controls.js";
+﻿import { bindControls } from "./controls.js";
 import { loadRecords } from "./state.js";
 
 function getElements() {
@@ -13,7 +13,9 @@ function getElements() {
     exportCsvButton: document.getElementById("export-csv"),
     importJsonInput: document.getElementById("import-json"),
     mealStatus: document.getElementById("meal-status"),
-    medicationTaken: document.getElementById("medication-taken")
+    medicationTaken: document.getElementById("medication-taken"),
+    energyChange: document.getElementById("energy-change"),
+    measurementContext: document.getElementById("measurement-context")
   };
 }
 
